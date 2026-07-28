@@ -24,6 +24,11 @@
 #        온도: 82.5도 / 정상: True
 # ---------------------------------------------------------------------------
 print("[1]")
+name = "PUMP-A"
+temp = 82.5
+time = 1250
+flag = True
+print(f"설비 : {name} / 온도 : {temp} / 가동시간 {time} / 정상 여부 {flag}")
 # 여기에 코드 작성
 
 
@@ -37,7 +42,7 @@ print("[1]")
 print("[2]")
 total_sec = 3725
 # 여기에 코드 작성
-
+print(f"{total_sec//3600}시간 {total_sec%3600//60}분 {total_sec%60}초")
 
 # ---------------------------------------------------------------------------
 # [3] 설비 코드 해석기
@@ -50,6 +55,9 @@ total_sec = 3725
 # ---------------------------------------------------------------------------
 print("[3]")
 code = "EQP-2026-A07"
+arr = code.split("-")
+print(f"종류 {arr[0]} / {arr[1]}년 / 번호 {arr[2]}")
+print(f"정식 코드 : {arr[0].startswith("EQP")}")
 # 여기에 코드 작성
 
 
@@ -64,6 +72,8 @@ code = "EQP-2026-A07"
 print("[4]")
 email = "student@school.kr"
 # 여기에 코드 작성
+idx = email.find("@")
+print(email[0] + len(email[1:idx]) * "*" + email[idx:])
 
 
 # ---------------------------------------------------------------------------
@@ -76,7 +86,10 @@ email = "student@school.kr"
 print("[5]")
 pw = "abc12"
 # 여기에 코드 작성
-
+if len(pw) < 6:
+    print(f"너무 짧음 : {len(pw)}자")
+else:
+    print("사용 가능")
 
 # ---------------------------------------------------------------------------
 # [6] 심사위원 점수 계산 (최고·최저 제외 평균)
@@ -88,7 +101,8 @@ pw = "abc12"
 print("[6]")
 scores = [88, 92, 79, 95, 84]
 # 여기에 코드 작성
-
+scores.sort()
+print(f"최고 최소 제외 평균 : {sum(scores[1:-1])/(len(scores)-2):.1f}")
 
 # ---------------------------------------------------------------------------
 # [7] 재고 추적 시뮬레이션
@@ -106,6 +120,9 @@ scores = [88, 92, 79, 95, 84]
 print("[7]")
 stock = 100
 orders = [30, -20, 50, -40, 25]
+for i in orders:
+    stock += i
+print(f"최종 재고 :", stock)
 # 여기에 코드 작성
 
 
@@ -122,6 +139,8 @@ print("[8]")
 names = ["펌프", "모터", "팬", "밸브"]
 target1 = "팬"
 target2 = "히터"
+print(f"팬 : {str(names.index(target1))+"번 인덱스" if target1 in names else "없음"}")
+print(f"히터 : {str(names.index(target2))+"번 인덱스" if target2 in names else "없음"}")
 # 여기에 코드 작성
 
 
@@ -135,7 +154,10 @@ target2 = "히터"
 print("[9]")
 launch = 10
 # 여기에 코드 작성
-
+while launch > 0:
+    print(launch)
+    launch -= 3
+print("발사!")
 
 # ---------------------------------------------------------------------------
 # [10] 비밀번호 대조기
@@ -150,7 +172,11 @@ print("[10]")
 answer = "1234"
 attempts = ["1111", "1234", "0000"]
 # 여기에 코드 작성
-
+for i in attempts:
+    if i == answer:
+        print("성공")
+        break
+    print("실패")
 
 # ---------------------------------------------------------------------------
 # [11] 온도 급상승 경보
@@ -165,6 +191,12 @@ attempts = ["1111", "1234", "0000"]
 print("[11]")
 temps = [70, 72, 71, 80, 79]
 # 여기에 코드 작성
+cnt = 1
+for i in range(1, len(temps)):
+    if temps[i - 1] + 5 <= temps[i]:
+        print(f"경보 {temps[i-1]} -> {temps[i]}")
+        print(f"급상승 {cnt}회")
+        cnt += 1
 
 
 # ---------------------------------------------------------------------------
@@ -180,7 +212,16 @@ temps = [70, 72, 71, 80, 79]
 print("[12]")
 sentence = "the quick fox the lazy dog the end"
 # 여기에 코드 작성
-
+max_value = 0
+max_eng = ""
+arr = sentence.split(" ")
+print(f"단어 {len(arr)}개")
+print(f"the {arr.count("the")}개")
+for i in arr:
+    if len(i) > max_value:
+        max_value = len(i)
+        max_eng = i
+print(f"가장 긴 단어 : {max_eng}")
 
 # ---------------------------------------------------------------------------
 # [13] 내 등수 계산기
@@ -193,7 +234,8 @@ print("[13]")
 scores = [72, 95, 88, 60, 79]
 my_score = 88
 # 여기에 코드 작성
-
+scores.sort(reverse=True)
+print(f"{len(scores)}명 중 {scores.index(my_score) + 1}등")
 
 # ---------------------------------------------------------------------------
 # [14] 검사 결과 정제와 합격률
@@ -206,6 +248,10 @@ my_score = 88
 # ---------------------------------------------------------------------------
 print("[14]")
 results = ["  OK ", "fail", " OK", "FAIL ", "ok"]
+for i in range(len(results)):
+    results[i] = results[i].lower().strip()
+print(f"ok {results.count("ok")}개 / fail {results.count("fail")}개")
+print(f"합격률 : {(results.count("ok")/len(results))*100:.1f}%")
 # 여기에 코드 작성
 
 
@@ -227,7 +273,13 @@ results = ["  OK ", "fail", " OK", "FAIL ", "ok"]
 print("[15]")
 sensors = [["펌프", 72], ["모터", 91], ["팬", 65], ["압축기", 88]]
 # 여기에 코드 작성
+warning = []
+temps_avg = sum([i[1] for i in sensors]) / len(sensors)
+temps_name = [i[0] for i in sensors if i[1] > 80]
 
+print(f"감시 설비 : {len(sensors)}대")
+print(f"평균 온도 : {temps_avg}도")
+print(f"경고 설비 : {len(temps_name)}대 - {temps_name}")
 
 print()
 print("총정리 끝! 여기까지 스스로 풀었다면 기초 과정 완주입니다")
